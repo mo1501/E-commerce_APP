@@ -5,6 +5,7 @@ import '../../../size_config.dart';
 import 'package:ecommerce_app/theme.dart';
 import '../../components/default_button.dart';
 import '../../components/form_error.dart';
+import '../../forgot_password/forgot_password_screen.dart';
 
 class SignForm extends StatefulWidget {
   const SignForm({super.key});
@@ -49,7 +50,7 @@ class _SignFormState extends State<SignForm> {
             children: [
               Checkbox(
                 value: remember,
-                activeColor: kPrimaryColor,
+                activeColor: Colors.teal.shade900,
                 onChanged: (value) {
                   setState(() {
                     remember = value!;
@@ -59,11 +60,16 @@ class _SignFormState extends State<SignForm> {
               Text("Remember me"),
               Spacer(),
               GestureDetector(
-                // onTap: () => Navigator.pushNamed(
-                //    context, ForgotPasswordScreen.routeName),
+                onTap: () => Navigator.pushNamed(
+                    context, ForgotPasswordScreen.routeName),
                 child: Text(
-                  "Forgot Password",
-                  style: TextStyle(decoration: TextDecoration.underline),
+                  "Forgot Password?",
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    color: Colors.teal.shade900,
+                    fontSize: getProportionateScreenWidth(36),
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
               )
             ],
