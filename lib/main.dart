@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/constants.dart';
 import 'package:ecommerce_app/routes.dart';
 import 'package:ecommerce_app/screens/splash/splash_screen.dart';
+import 'package:ecommerce_app/theme.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,16 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        fontFamily: "Lora",
-        textTheme: TextTheme(
-          bodyText1: TextStyle(color: kTextColor),
-          bodyText2: TextStyle(color: kTextColor),
-        ),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        primarySwatch: Colors.blue,
-      ),
+      theme: theme(), 
       initialRoute: SplashScreen.routeName,
       routes: routes,
     );

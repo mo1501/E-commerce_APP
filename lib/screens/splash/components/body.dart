@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/constants.dart';
-import 'package:ecommerce_app/screens/splash/components/default_button.dart';
+import 'package:ecommerce_app/screens/sign_in/sign_in_screen.dart';
+import 'package:ecommerce_app/screens/components/default_button.dart';
 import 'package:ecommerce_app/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/screens/splash/components/splash_content.dart';
@@ -50,7 +51,7 @@ class _BodyState extends State<Body> {
               ),
             ),
             Expanded(
-              flex: 2,
+              flex: 1,
               child: Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: getProportionateScreenWidth(20),
@@ -66,7 +67,9 @@ class _BodyState extends State<Body> {
                     flex: 3,
                   ),
                   DefaultButton(
-                    press: () {},
+                    press: (){
+                      Navigator.pushNamed(context, SignInScreen.routeName);
+                    },
                     text: 'Continue',
                   ),
                   Spacer(),
@@ -86,7 +89,8 @@ class _BodyState extends State<Body> {
       height: 6,
       width: currentPage == index ? 20 : 6,
       decoration: BoxDecoration(
-        color: currentPage == index ? Colors.black : Colors.black,
+        color:
+            currentPage == index ? Colors.green.shade900 : Colors.grey.shade600,
         borderRadius: BorderRadius.circular(3),
       ),
     );

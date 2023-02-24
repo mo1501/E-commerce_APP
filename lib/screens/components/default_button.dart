@@ -1,9 +1,14 @@
+import 'package:ecommerce_app/constants.dart';
 import 'package:flutter/material.dart';
 
-import '../../../size_config.dart';
+import '../../size_config.dart';
+import '../sign_in/sign_in_screen.dart';
+
 class DefaultButton extends StatelessWidget {
   const DefaultButton({
-    Key? key, required this.text, required this.press,
+    Key? key,
+    required this.text,
+    required this.press,
   }) : super(key: key);
   final String text;
   final Function press;
@@ -14,7 +19,14 @@ class DefaultButton extends StatelessWidget {
       width: double.infinity,
       height: getProportionateScreenHeight(60),
       child: ElevatedButton(
-        onPressed: (){},
+        style: ButtonStyle(
+          backgroundColor: MaterialStatePropertyAll<Color>(
+            Colors.green.shade900,
+          ),
+        ),
+        onPressed: () {
+          Navigator.pushNamed(context, SignInScreen.routeName);
+        },
         child: Text(
           text,
           style: TextStyle(

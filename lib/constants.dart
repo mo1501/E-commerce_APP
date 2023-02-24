@@ -8,8 +8,16 @@ const kPrimaryGradientColor = LinearGradient(
   colors: [Color(0x1E524E), Color.fromARGB(0, 46, 122, 116)],
 );
 const kSecondaryColor = Color(0xF6D183);
-const kTextColor = Colors.white;
+const kTextColor = Colors.black;
 
 const KAnimationDuration = Duration(
   milliseconds: 200,
 );
+// Form Errors
+final RegExp emailValidatorRegExp =
+    RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+const String kEmailNullError = "Please Enter your email";
+const String kInvalidEmailError = "Please Enter Valid Email";
+const String kPassNullError = "Please Enter your password";
+const String kShortPassError = "Password is too short";
+const String kMatchPassError = "Passwords don't match";

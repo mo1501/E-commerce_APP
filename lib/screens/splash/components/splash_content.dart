@@ -26,20 +26,25 @@ class SplashContent extends StatelessWidget {
         height: 15,
       ),
       Text(
-        text,textAlign: TextAlign.center,
+        text,
+        textAlign: TextAlign.center,
         style: TextStyle(
           fontSize: getProportionateScreenWidth(35),
           color: Colors.black,
           fontWeight: FontWeight.normal,
         ),
       ),
-      Spacer(
-        flex: 2,
+      SizedBox(
+        height: 20,
       ),
-      Image.asset(
-        image,
-        height: getProportionateScreenHeight(300),
-        width: getProportionateScreenWidth(235),
+      Expanded(
+        flex: 7,
+        child: Image.asset(
+          image,
+          fit: BoxFit.fitWidth,
+          height: getProportionateScreenHeight(600),
+          width: getProportionateScreenWidth(800),
+        ),
       ),
     ]);
   }
