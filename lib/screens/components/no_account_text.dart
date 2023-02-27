@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/screens/sign_up/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 //import 'package:shop_app/screens/forgot_password/forgot_password_screen.dart';
 
@@ -22,7 +23,9 @@ class NoAccountText extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Navigator.popAndPushNamed(context, SignUpScreen.routeName);
+          },
           child: Text(
             "Sign Up",
             style: TextStyle(

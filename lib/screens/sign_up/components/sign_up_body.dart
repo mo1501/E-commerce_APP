@@ -1,14 +1,12 @@
-import 'package:ecommerce_app/screens/sign_in/components/sign_form.dart';
-import 'package:ecommerce_app/size_config.dart';
 import 'package:flutter/material.dart';
-
-import '../../components/no_account_text.dart';
-import '../../components/social_card.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../../../constants.dart';
 
-class SignInBody extends StatelessWidget {
-  const SignInBody({super.key});
+import '../../../size_config.dart';
+import '../../components/social_card.dart';
+import 'sign_up_form.dart';
 
+class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -20,39 +18,32 @@ class SignInBody extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(
-                  height: SizeConfig.screenHeight! * 0.04,
-                ),
+                SizedBox(height: SizeConfig.screenHeight! * 0.02), // 4%
                 Text(
-                  "Sign In",
+                  "Register Account",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: getProportionateScreenWidth(55),
                     fontWeight: FontWeight.bold,
-                    fontFamily: "Lora",
                   ),
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 Text(
-                  "Use your details or social media to sign in",
+                  "Complete your details or continue \nwith social media",
                   style: TextStyle(
                     color: Color(0XFF8B8B8B),
                     fontSize: getProportionateScreenWidth(30),
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.normal,
                   ),
+                  textAlign: TextAlign.center,
                 ),
-                SizedBox(
-                  height: SizeConfig.screenHeight! * 0.08,
-                ),
-                SignForm(),
-                SizedBox(
-                  height: SizeConfig.screenHeight! * 0.08,
-                ),
+                SizedBox(height: SizeConfig.screenHeight! * 0.08),
+                SignUpForm(),
+                SizedBox(height: SizeConfig.screenHeight! * 0.08),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SocialCard(
                       icon: Icon(
@@ -89,8 +80,16 @@ class SignInBody extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: getProportionateScreenHeight(50)),
-                NoAccountText(),
+                SizedBox(height: getProportionateScreenHeight(20)),
+                Text(
+                  'By continuing your confirm that you agree \nwith our Term and Condition',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: getProportionateScreenWidth(30),
+                    fontWeight: FontWeight.normal,
+                  ),
+                )
               ],
             ),
           ),

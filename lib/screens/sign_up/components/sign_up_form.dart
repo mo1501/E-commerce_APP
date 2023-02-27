@@ -2,22 +2,19 @@ import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
-import 'package:ecommerce_app/theme.dart';
 import '../../components/default_button.dart';
 import '../../components/form_error.dart';
-import '../../forgot_password/forgot_password_screen.dart';
 
-class SignForm extends StatefulWidget {
-  const SignForm({super.key});
-
+class SignUpForm extends StatefulWidget {
   @override
-  State<SignForm> createState() => _SignFormState();
+  _SignUpFormState createState() => _SignUpFormState();
 }
 
-class _SignFormState extends State<SignForm> {
+class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
   late String email;
   late String password;
+  late String conform_password;
   bool remember = false;
   final List<String> errors = [];
 
@@ -37,7 +34,6 @@ class _SignFormState extends State<SignForm> {
 
   @override
   Widget build(BuildContext context) {
-    theme();
     return Form(
       key: _formKey,
       child: Column(
@@ -46,47 +42,58 @@ class _SignFormState extends State<SignForm> {
           SizedBox(height: getProportionateScreenHeight(30)),
           buildPasswordFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
-          Row(
-            children: [
-              Checkbox(
-                value: remember,
-                activeColor: Colors.teal.shade900,
-                onChanged: (value) {
-                  setState(() {
-                    remember = value!;
-                  });
-                },
-              ),
-              Text("Remember me"),
-              Spacer(),
-              GestureDetector(
-                onTap: () => Navigator.pushNamed(
-                    context, ForgotPasswordScreen.routeName),
-                child: Text(
-                  "Forgot Password?",
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    color: Colors.teal.shade900,
-                    fontSize: getProportionateScreenWidth(36),
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-              )
-            ],
-          ),
+          buildConformPassFormField(),
           FormError(errors: errors),
-          SizedBox(height: getProportionateScreenHeight(20)),
+          SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
             text: "Continue",
             press: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 // if all are valid then go to success screen
-                // Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                // Navigator.pushNamed(context, CompleteProfileScreen.routeName);
               }
             },
           ),
         ],
+      ),
+    );
+  }
+
+  TextFormField buildConformPassFormField() {
+    return TextFormField(
+      obscureText: true,
+      onSaved: (newValue) => conform_password = newValue!,
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: kPassNullError);
+        } else if (value.isNotEmpty && password == conform_password) {
+          removeError(error: kMatchPassError);
+        }
+        conform_password = value;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          addError(error: kPassNullError);
+          return "";
+        } else if ((password != value)) {
+          addError(error: kMatchPassError);
+          return "";
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        labelText: "Confirm Password",
+        labelStyle: TextStyle(
+          color: Colors.black,
+          fontSize: 20,
+          fontStyle: FontStyle.normal,
+        ),
+        hintText: "Re-enter your password",
+        // If  you are using latest version of flutter then lable text and hint text shown like this
+        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: Icon(Icons.lock_open_sharp),
       ),
     );
   }
@@ -101,15 +108,15 @@ class _SignFormState extends State<SignForm> {
         } else if (value.length >= 8) {
           removeError(error: kShortPassError);
         }
-        return null;
+        password = value;
       },
       validator: (value) {
         if (value!.isEmpty) {
           addError(error: kPassNullError);
-          return "Enter valid password";
+          return "";
         } else if (value.length < 8) {
           addError(error: kShortPassError);
-          return "Enter valid password";
+          return "";
         }
         return null;
       },
@@ -144,26 +151,25 @@ class _SignFormState extends State<SignForm> {
       validator: (value) {
         if (value!.isEmpty) {
           addError(error: kEmailNullError);
-          return "Enter valid email";
+          return "";
         } else if (!emailValidatorRegExp.hasMatch(value)) {
           addError(error: kInvalidEmailError);
-          return "Enter valid email";
+          return "";
         }
         return null;
       },
       decoration: InputDecoration(
-        labelText: "Email",
-        labelStyle: TextStyle(
-          color: Colors.black,
-          fontSize: 20,
-          fontStyle: FontStyle.normal,
-        ),
-        hintText: "Enter your email",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: Icon(Icons.email_outlined),
-      ),
+          labelText: "Email",
+          labelStyle: TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            fontStyle: FontStyle.normal,
+          ),
+          hintText: "Enter your email",
+          // If  you are using latest version of flutter then lable text and hint text shown like this
+          // if you r using flutter less then 1.20.* then maybe this is not working properly
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          suffixIcon: Icon(Icons.email_outlined)),
     );
   }
 }

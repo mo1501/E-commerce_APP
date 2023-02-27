@@ -23,6 +23,12 @@ class DefaultButton extends StatelessWidget {
           backgroundColor: MaterialStatePropertyAll<Color>(
             Colors.teal.shade900,
           ),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              // Change your radius here
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
         ),
         onPressed: () {
           Navigator.pushNamed(context, SignInScreen.routeName);
