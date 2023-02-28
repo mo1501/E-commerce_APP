@@ -1,5 +1,7 @@
+import 'package:ecommerce_app/screens/homepage/homepage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -16,7 +18,10 @@ class _SignUpFormState extends State<SignUpForm> {
   late String email;
   late String password;
   late String confirm_password;
-  bool remember = false;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+
   final List<String> errors = [];
 
   void addError({String? error}) {
@@ -26,7 +31,7 @@ class _SignUpFormState extends State<SignUpForm> {
       });
   }
 
-  void removeError({String? error}) {
+  Future<void> removeError({String? error}) async {
     if (errors.contains(error))
       setState(() {
         errors.remove(error);
@@ -43,27 +48,41 @@ class _SignUpFormState extends State<SignUpForm> {
           SizedBox(height: getProportionateScreenHeight(30)),
           buildPasswordFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
-          buildConformPassFormField(),
+          buildConfirmPassFormField(),
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
-            text: "Continue",
-            press: () {},
+              text: "Continue",
+              press: () async {
+                FirebaseAuth auth = FirebaseAuth.instance;
+                
+                if (_formKey.currentState!.validate()) {
+                  UserCredential user =
+                      await auth.createUserWithEmailAndPassword(
+                    email: emailController.text,
+                    password: passwordController.text,
+                  );
+                  if (user != null) {
+                    Navigator.of(context).pushNamed(HomePage.routeName);
+                  }
+                }
+              }
 
-            // if (_formKey.currentState!.validate()) {
-            //   _formKey.currentState!.save();
-            //   if all are valid then go to success screen
-            //   Navigator.pushNamed(context, CompleteProfileScreen.routeName);
-            // }
-            // },
-          ),
+              // if (_formKey.currentState!.validate()) {
+              //   _formKey.currentState!.save();
+              //   if all are valid then go to success screen
+              //   Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+              // }
+              // },
+              ),
         ],
       ),
     );
   }
 
-  TextFormField buildConformPassFormField() {
+  TextFormField buildConfirmPassFormField() {
     return TextFormField(
+      controller: confirmPasswordController,
       obscureText: true,
       onSaved: (newValue) => confirm_password = newValue!,
       onChanged: (value) {
@@ -102,6 +121,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   TextFormField buildPasswordFormField() {
     return TextFormField(
+      controller: passwordController,
       obscureText: true,
       onSaved: (newValue) => password = newValue!,
       onChanged: (value) {
@@ -140,6 +160,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   TextFormField buildEmailFormField() {
     return TextFormField(
+      controller: emailController,
       keyboardType: TextInputType.emailAddress,
       onSaved: (newValue) => email = newValue!,
       onChanged: (value) {

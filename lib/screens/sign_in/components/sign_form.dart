@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
@@ -6,6 +7,7 @@ import 'package:ecommerce_app/theme.dart';
 import '../../components/default_button.dart';
 import '../../components/form_error.dart';
 import '../../forgot_password/forgot_password_screen.dart';
+import '../../homepage/homepage.dart';
 
 class SignForm extends StatefulWidget {
   const SignForm({super.key});
@@ -20,6 +22,9 @@ class _SignFormState extends State<SignForm> {
   late String password;
   bool remember = false;
   final List<String> errors = [];
+
+  TextEditingController loginEmailController = TextEditingController();
+  TextEditingController loginPasswordController = TextEditingController();
 
   void addError({String? error}) {
     if (!errors.contains(error))
@@ -48,16 +53,7 @@ class _SignFormState extends State<SignForm> {
           SizedBox(height: getProportionateScreenHeight(30)),
           Row(
             children: [
-              Checkbox(
-                value: remember,
-                activeColor: Colors.teal.shade900,
-                onChanged: (value) {
-                  setState(() {
-                    remember = value!;
-                  });
-                },
-              ),
-              Text("Remember me"),
+              
               Spacer(),
               GestureDetector(
                 onTap: () => Navigator.pushNamed(
@@ -78,13 +74,18 @@ class _SignFormState extends State<SignForm> {
           SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
             text: "Continue",
-            press: () {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
-                // if all are valid then go to success screen
-                // Navigator.pushNamed(context, LoginSuccessScreen.routeName);
-              }
-            },
+            press: () async {
+                FirebaseAuth auth = FirebaseAuth.instance;
+                if (_formKey.currentState!.validate()) {
+                  UserCredential user = await auth.signInWithEmailAndPassword(
+                    email: loginEmailController.text,
+                    password: loginPasswordController.text,
+                  );
+                  if (user != null) {
+                    Navigator.of(context).pushNamed(HomePage.routeName);
+                  }
+                }
+              },
           ),
         ],
       ),
@@ -93,6 +94,7 @@ class _SignFormState extends State<SignForm> {
 
   TextFormField buildPasswordFormField() {
     return TextFormField(
+      controller: loginPasswordController,
       obscureText: true,
       onSaved: (newValue) => password = newValue!,
       onChanged: (value) {
@@ -131,6 +133,7 @@ class _SignFormState extends State<SignForm> {
 
   TextFormField buildEmailFormField() {
     return TextFormField(
+      controller: loginEmailController,
       keyboardType: TextInputType.emailAddress,
       onSaved: (newValue) => email = newValue!,
       onChanged: (value) {
