@@ -7,6 +7,8 @@ import '../../main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'components/home_body.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
   static String routeName = "/homepage";
@@ -28,12 +30,11 @@ class _HomePageState extends State<HomePage> {
         future: _initializeFirebase(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return Center(child: Text('Homepage'));
-          } 
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          
+            return HomeBody();
+          }
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         },
       ),
     );
