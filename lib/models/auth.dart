@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Auth with ChangeNotifier {
-
   static Future<User?> registerUsingEmailPassword({
     required String name,
     required String email,
@@ -10,7 +9,7 @@ class Auth with ChangeNotifier {
   }) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
-    
+
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
         email: email,
@@ -31,15 +30,14 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> signIn(String userEmail, String userPassword) async {
-   try{ await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: userEmail, password: userPassword);
-   }on FirebaseAuthException catch (e) {
+    try {
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: userEmail, password: userPassword);
+    } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
-
         print('The account already exists for that email.');
-
       }
     } catch (e) {
       print(e);
@@ -47,30 +45,27 @@ class Auth with ChangeNotifier {
   }
 
   static Future<User?> signInUsingEmailPassword({
-  required String email,
-  required String password,
-  required BuildContext context,
-}) async {
-  FirebaseAuth auth = FirebaseAuth.instance;
-  User? user;
+    required String email,
+    required String password,
+    required BuildContext context,
+  }) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user;
 
-  try {
-    UserCredential userCredential = await auth.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-    user = userCredential.user;
-  } on FirebaseAuthException catch (e) {
-    if (e.code == 'user-not-found') {
-      print('No user found for that email.');
-    } else if (e.code == 'wrong-password') {
-      print('Wrong password provided.');
+    try {
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      user = userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided.');
+      }
     }
+
+    return user;
   }
-
-  return user;
-}
-
-
-
 }

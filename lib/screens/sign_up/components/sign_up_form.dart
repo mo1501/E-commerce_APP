@@ -40,6 +40,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   @override
   Widget build(BuildContext context) {
+    var loading = false;
     return Form(
       key: _formKey,
       child: Column(
@@ -51,30 +52,37 @@ class _SignUpFormState extends State<SignUpForm> {
           buildConfirmPassFormField(),
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(40)),
-          DefaultButton(
-              text: "Continue",
-              press: () async {
-                FirebaseAuth auth = FirebaseAuth.instance;
-                
-                if (_formKey.currentState!.validate()) {
-                  UserCredential user =
-                      await auth.createUserWithEmailAndPassword(
-                    email: emailController.text,
-                    password: passwordController.text,
-                  );
-                  if (user != null) {
-                    Navigator.of(context).pushNamed(HomePage.routeName);
+          if (loading == false)
+            DefaultButton(
+                text: "Continue",
+                press: () async {
+                  loading = true;
+
+                  FirebaseAuth auth = FirebaseAuth.instance;
+
+                  if (_formKey.currentState!.validate()) {
+                    UserCredential user =
+                        await auth.createUserWithEmailAndPassword(
+                      email: emailController.text,
+                      password: passwordController.text,
+                    );
+
+                    if (user != null) {
+                      if (loading == true) {
+                        CircularProgressIndicator();
+                      }
+                      Navigator.of(context).pushNamed(HomePage.routeName);
+                    }
                   }
                 }
-              }
 
-              // if (_formKey.currentState!.validate()) {
-              //   _formKey.currentState!.save();
-              //   if all are valid then go to success screen
-              //   Navigator.pushNamed(context, CompleteProfileScreen.routeName);
-              // }
-              // },
-              ),
+                // if (_formKey.currentState!.validate()) {
+                //   _formKey.currentState!.save();
+                //   if all are valid then go to success screen
+                //   Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                // }
+                // },
+                ),
         ],
       ),
     );

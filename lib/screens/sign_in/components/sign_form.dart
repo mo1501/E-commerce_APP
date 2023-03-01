@@ -20,7 +20,6 @@ class _SignFormState extends State<SignForm> {
   final _formKey = GlobalKey<FormState>();
   late String email;
   late String password;
-  bool remember = false;
   final List<String> errors = [];
 
   TextEditingController loginEmailController = TextEditingController();
@@ -42,6 +41,7 @@ class _SignFormState extends State<SignForm> {
 
   @override
   Widget build(BuildContext context) {
+    var loading = false;
     theme();
     return Form(
       key: _formKey,
@@ -53,7 +53,6 @@ class _SignFormState extends State<SignForm> {
           SizedBox(height: getProportionateScreenHeight(30)),
           Row(
             children: [
-              
               Spacer(),
               GestureDetector(
                 onTap: () => Navigator.pushNamed(
@@ -75,17 +74,22 @@ class _SignFormState extends State<SignForm> {
           DefaultButton(
             text: "Continue",
             press: () async {
-                FirebaseAuth auth = FirebaseAuth.instance;
-                if (_formKey.currentState!.validate()) {
-                  UserCredential user = await auth.signInWithEmailAndPassword(
-                    email: loginEmailController.text,
-                    password: loginPasswordController.text,
-                  );
-                  if (user != null) {
-                    Navigator.of(context).pushNamed(HomePage.routeName);
-                  }
+              loading = true;
+              FirebaseAuth auth = FirebaseAuth.instance;
+              if (_formKey.currentState!.validate()) {
+                UserCredential user = await auth.signInWithEmailAndPassword(
+                  email: loginEmailController.text,
+                  password: loginPasswordController.text,
+                );
+               
+                if (user != null) {
+                 if (loading == true) {
+                        CircularProgressIndicator();
+                      }
+                  Navigator.of(context).pushNamed(HomePage.routeName);
                 }
-              },
+              }
+            },
           ),
         ],
       ),

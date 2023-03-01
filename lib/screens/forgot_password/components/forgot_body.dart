@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/screens/sign_in/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
@@ -5,6 +6,8 @@ import '../../../size_config.dart';
 import '../../components/default_button.dart';
 import '../../components/form_error.dart';
 import '../../components/no_account_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -55,6 +58,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
   final _formKey = GlobalKey<FormState>();
   List<String> errors = [];
   late String email;
+  TextEditingController emailForgotController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -62,6 +66,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
       child: Column(
         children: [
           TextFormField(
+            controller: emailForgotController,
             keyboardType: TextInputType.emailAddress,
             onSaved: (newValue) => email = newValue!,
             onChanged: (value) {
@@ -104,14 +109,18 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
           SizedBox(height: SizeConfig.screenHeight! * 0.1),
           DefaultButton(
             text: "Continue",
-            press: () {
+            press: () async {
               if (_formKey.currentState!.validate()) {
-                // Do what you want to do
+                FirebaseAuth auth = FirebaseAuth.instance;
+
+                await auth.sendPasswordResetEmail(
+                    email: emailForgotController.text);
+
+                Navigator.pushNamed(context, SignInScreen.routeName);
               }
             },
           ),
           SizedBox(height: SizeConfig.screenHeight! * 0.1),
-          NoAccountText(),
         ],
       ),
     );
