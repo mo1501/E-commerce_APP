@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/screens/app_navigation/btmnavbar.dart';
 import 'package:ecommerce_app/screens/homepage/homepage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +72,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       if (loading == true) {
                         CircularProgressIndicator();
                       }
-                      Navigator.of(context).pushNamed(HomePage.routeName);
+                      Navigator.of(context).pushNamed(BtmNavigationBar.routeName);
                     }
                   }
                 }

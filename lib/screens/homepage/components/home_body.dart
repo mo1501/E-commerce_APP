@@ -26,6 +26,27 @@ class HomeBody extends StatelessWidget {
             SizedBox(height: getProportionateScreenWidth(30)),
             PopularProducts(),
             SizedBox(height: getProportionateScreenWidth(30)),
+            // BottomNavigationBar(
+              
+            //   items: const <BottomNavigationBarItem>[
+            //     BottomNavigationBarItem(
+            //       icon: Icon(Icons.home_outlined),
+            //       label: 'Home',
+            //     ),
+            //     BottomNavigationBarItem(
+            //       icon: Icon(Icons.favorite_border),
+            //       label: 'Wishlist',
+            //     ),
+            //     BottomNavigationBarItem(
+            //       icon: Icon(Icons.message_sharp),
+            //       label: 'Messages',
+            //     ),
+            //     BottomNavigationBarItem(
+            //       icon: Icon(Icons.person_outline_outlined),
+            //       label: 'Profile',
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       ),

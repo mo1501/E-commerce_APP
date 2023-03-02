@@ -6,6 +6,7 @@ import 'package:ecommerce_app/screens/sign_in/sign_in_screen.dart';
 import 'package:ecommerce_app/screens/sign_up/sign_up_screen.dart';
 import 'package:ecommerce_app/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:ecommerce_app/screens/app_navigation/btmnavbar.dart';
 
 // used named routes
 final Map<String, WidgetBuilder> routes = {
@@ -14,5 +15,6 @@ final Map<String, WidgetBuilder> routes = {
   ForgotPasswordScreen.routeName: (context) => ForgotPasswordScreen(),
   SignUpScreen.routeName:(context) => SignUpScreen(),
   HomePage.routeName:(context) => HomePage(),
+  BtmNavigationBar.routeName:(context) => BtmNavigationBar(),
 
 };
