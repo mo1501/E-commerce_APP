@@ -2,6 +2,7 @@
 
 import 'package:ecommerce_app/screens/forgot_password/forgot_password_screen.dart';
 import 'package:ecommerce_app/screens/homepage/homepage.dart';
+import 'package:ecommerce_app/screens/product_detail_screen/product_details_screen.dart';
 import 'package:ecommerce_app/screens/sign_in/sign_in_screen.dart';
 import 'package:ecommerce_app/screens/sign_up/sign_up_screen.dart';
 import 'package:ecommerce_app/screens/splash/splash_screen.dart';
@@ -16,5 +17,6 @@ final Map<String, WidgetBuilder> routes = {
   SignUpScreen.routeName:(context) => SignUpScreen(),
   HomePage.routeName:(context) => HomePage(),
   BtmNavigationBar.routeName:(context) => BtmNavigationBar(),
+  DetailsScreen.routeName:(context) => DetailsScreen(),
 
 };

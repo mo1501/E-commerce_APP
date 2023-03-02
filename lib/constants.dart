@@ -13,6 +13,7 @@ const kTextColor = Colors.black;
 const KAnimationDuration = Duration(
   milliseconds: 200,
 );
+const defaultDuration = Duration(milliseconds: 250);
 // Form Errors
 final RegExp emailValidatorRegExp =
     RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
